@@ -6,7 +6,7 @@ A cég rendszereinél megkövetelünk meghatározott időközönkénti jelszócs
 
 
 ## 2. Vágyálom rendszer
-Szeretnénk olyan szoftveres megoldást, mellyel alkalmazottaink biztonságosan és kényelmesen, egyetlen fiók használatával tárolhatják, hívhatják vissza jelszavaikat megakadályozva ezzel a korábbi problémákat. Továbbá a szoftver segítsen az idószakonkénti jelszócseréknél kellőképpen biztonságos jelszavakat generálni.
+Szeretnénk olyan szoftveres megoldást, mellyel alkalmazottaink biztonságosan és kényelmesen, egyetlen fiók használatával tárolhatják, hívhatják vissza jelszavaikat megakadályozva ezzel a korábbi problémákat. Továbbá a szoftver segítsen az időszakonkénti jelszócseréknél kellőképpen biztonságos jelszavakat generálni.
 
 
 ## 3. Jelenlegi üzleti folymatok

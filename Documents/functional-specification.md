@@ -45,7 +45,7 @@ Szeretnénk olyan szoftveres megoldást, mellyel alkalmazottaink biztonságosan 
 
 
 ## 7. Képernyő tervek
-
+![](https://raw.githubusercontent.com/nehai-kettes-tankor/second-project/master/Documents/login-design.png)
 
 
 ## 8. Fogalomszótár

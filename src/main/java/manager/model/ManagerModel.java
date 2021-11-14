@@ -1,7 +1,7 @@
 package manager.model;
 
-import manager.database.HandleData;
-import manager.database.User;
+import database.HandleData;
+import database.User;
 
 public class ManagerModel {
 

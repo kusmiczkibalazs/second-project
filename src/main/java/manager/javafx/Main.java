@@ -1,3 +1,5 @@
+package manager.javafx;
+
 import javafx.application.Application;
 
 public class Main {

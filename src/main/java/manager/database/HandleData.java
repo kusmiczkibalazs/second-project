@@ -1,4 +1,4 @@
-package database;
+package manager.database;
 
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;

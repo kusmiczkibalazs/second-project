@@ -16,7 +16,7 @@
         <maven.compiler.release>16</maven.compiler.release>
         <exec.mainClass>manager.javafx.Main</exec.mainClass>
         <javafx.version>16</javafx.version>
-
+        <tinylog.version>2.2.1</tinylog.version>
         <jdbi.version>3.19.0</jdbi.version>
     </properties>
 
@@ -54,6 +54,24 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-api</artifactId>
+            <version>${tinylog.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>tinylog-impl</artifactId>
+            <version>${tinylog.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.tinylog</groupId>
+            <artifactId>slf4j-tinylog</artifactId>
+            <version>${tinylog.version}</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
     <build>

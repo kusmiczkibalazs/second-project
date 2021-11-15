@@ -1,4 +1,4 @@
-package database;
+package manager.database;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

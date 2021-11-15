@@ -1,0 +1,8 @@
+.slider .track {
+    -fx-pref-height:16;
+}
+
+.slider .thumb {
+    -fx-pref-height: 22;
+    -fx-pref-width: 11;
+}

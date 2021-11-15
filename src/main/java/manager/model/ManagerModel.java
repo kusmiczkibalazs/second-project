@@ -17,12 +17,7 @@ public class ManagerModel {
         String encodedPassword = encodePassword(password);
         boolean successfulLogin = handleData.checkUser(username, encodedPassword);
 
-        if(successfulLogin){
-            currentUsersName = username;
-            return true;
-        } else {
-            return false;
-        }
+       return successfulLogin;
     }
 
     private String encodePassword(String original){

@@ -39,7 +39,7 @@ public class GeneratorController {
 
     @FXML
     private void onPasswordGeneratorClick() {
-        Logger.debug(model.generatePassword((int)lengthSlider.getValue(), capitalLetterCheckbox.isSelected(), numberCheckbox.isSelected(), specialCharacterCheckbox.isSelected()));
+        model.copyToClipboard(model.generatePassword((int)lengthSlider.getValue(), capitalLetterCheckbox.isSelected(), numberCheckbox.isSelected(), specialCharacterCheckbox.isSelected()));
 
         Logger.debug("Length:" + (int) lengthSlider.getValue());
         Logger.debug("Capitals:" + capitalLetterCheckbox.isSelected() + " " +

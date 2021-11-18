@@ -13,11 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import manager.model.ManagerModel;
 import org.tinylog.Logger;
 
 import java.io.IOException;
 
 public class GeneratorController {
+
+    private ManagerModel model = new ManagerModel();
 
     @FXML
     private Slider lengthSlider;
@@ -36,6 +39,8 @@ public class GeneratorController {
 
     @FXML
     private void onPasswordGeneratorClick() {
+        model.copyToClipboard(model.generatePassword((int)lengthSlider.getValue(), capitalLetterCheckbox.isSelected(), numberCheckbox.isSelected(), specialCharacterCheckbox.isSelected()));
+
         Logger.debug("Length:" + (int) lengthSlider.getValue());
         Logger.debug("Capitals:" + capitalLetterCheckbox.isSelected() + " " +
                      "Numbers:" + numberCheckbox.isSelected() + " " +

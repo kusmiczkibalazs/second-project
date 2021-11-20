@@ -1,16 +1,29 @@
 package manager.javafx.controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MenuController {
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private void initialize () {
+        Platform.runLater(() -> {
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            stage.centerOnScreen();
+        });
+    }
 
     @FXML
     private void onPasswordGeneratorClick(ActionEvent event) throws IOException {
@@ -23,12 +36,11 @@ public class MenuController {
 
     @FXML
     private void onStoredPasswordClick(ActionEvent event) throws IOException {
-        //TODO scene
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("manager.fxml"));
         Parent root = fxmlLoader.load();
         ManagerController managerController = fxmlLoader.<ManagerController>getController();
 
-        managerController.setTempUsernameLabel("TESZT");
+        //managerController.method();
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

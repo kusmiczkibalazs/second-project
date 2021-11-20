@@ -45,7 +45,6 @@ public class GeneratorController {
         Logger.debug("Capitals:" + capitalLetterCheckbox.isSelected() + " " +
                      "Numbers:" + numberCheckbox.isSelected() + " " +
                      "Specials:" + specialCharacterCheckbox.isSelected());
-        //TODO vágólapra másolás
         infoLabel.setText("Jelszó vágólapra másolva");
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> infoLabel.setText("")));
         timeline.play();

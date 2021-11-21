@@ -27,7 +27,7 @@
                         <Insets bottom="50.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField promptText="Profil">
+                  <TextField fx:id="profileNameField" promptText="Profil">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -35,7 +35,7 @@
                         <Insets bottom="40.0" left="40.0" right="40.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField promptText="Felhasználónév">
+                  <TextField fx:id="userNameField" promptText="Felhasználónév">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -43,7 +43,7 @@
                         <Insets bottom="15.0" left="40.0" right="40.0" />
                      </VBox.margin>
                   </TextField>
-                  <PasswordField promptText="Jelszó">
+                  <PasswordField fx:id="passwordField" promptText="Jelszó">
                      <font>
                         <Font size="25.0" />
                      </font>
@@ -51,7 +51,7 @@
                         <Insets bottom="40.0" left="40.0" right="40.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Label alignment="CENTER" prefWidth="450.0" text="infolabel">
+                  <Label fx:id="createUpdateLabel" alignment="CENTER" prefWidth="450.0">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <Insets left="20.0" right="20.0" />
                      </padding>
                   </Label>
-                  <Button mnemonicParsing="false" prefWidth="300.0" text="Új profil mentése">
+                  <Button mnemonicParsing="false" onAction="#onSaveNewProfileClick" prefWidth="300.0" text="Új profil mentése">
                      <padding>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
@@ -73,7 +73,7 @@
                         <Insets bottom="20.0" left="75.0" right="75.0" />
                      </VBox.margin>
                   </Button>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" prefWidth="300.0" text="Meglévő profil frissítése">
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#onUpdateProfileClick" prefWidth="300.0" text="Meglévő profil frissítése">
                      <padding>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                      </padding>
@@ -104,7 +104,7 @@
                         <Insets bottom="50.0" left="75.0" right="75.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Label alignment="CENTER" prefWidth="450.0" text="Felhasználónév" wrapText="true">
+                  <Label fx:id="userNameDisplayLabel" alignment="CENTER" prefWidth="450.0" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -115,7 +115,7 @@
                         <Insets bottom="30.0" />
                      </VBox.margin>
                   </Label>
-                  <Label alignment="CENTER" prefWidth="450.0" text="Jelszó vágólapra másolva" wrapText="true">
+                  <Label fx:id="chooseProfileInfoLabel" alignment="CENTER" prefWidth="450.0" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

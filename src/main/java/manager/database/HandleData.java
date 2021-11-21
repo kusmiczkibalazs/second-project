@@ -23,16 +23,24 @@ public class HandleData {
         }
     }
 
-    public static Jdbi CreateConnection(){
+    public static Jdbi CreateConnectionUsers(){
         MakeUsersDir();
-        String databaseURL = databaseDirectory + File.separator + "data";
+        String databaseURL = databaseDirectory + File.separator + "user";
+        Jdbi jdbi = Jdbi.create("jdbc:h2:file:"+ databaseURL);
+        jdbi.installPlugin(new SqlObjectPlugin());
+        return jdbi;
+    }
+
+    public static Jdbi CreateConnectionStoredData(){
+        MakeUsersDir();
+        String databaseURL = databaseDirectory + File.separator + "storeData";
         Jdbi jdbi = Jdbi.create("jdbc:h2:file:"+ databaseURL);
         jdbi.installPlugin(new SqlObjectPlugin());
         return jdbi;
     }
 
     public static boolean saveUser(User user){
-        Jdbi jdbi = CreateConnection();
+        Jdbi jdbi = CreateConnectionUsers();
         try(Handle handle = jdbi.open()) {
             UsersDao dao = handle.attach(UsersDao.class);
             dao.createTable();
@@ -48,9 +56,10 @@ public class HandleData {
     }
 
     public static boolean checkUser(String username, String password){
-        Jdbi jdbi = CreateConnection();
+        Jdbi jdbi = CreateConnectionUsers();
         try(Handle handle = jdbi.open()){
             UsersDao dao = handle.attach(UsersDao.class);
+            dao.createTable();
             List<String> usernames= dao.getUsernames();
             if(usernames.contains(username)){
                 return dao.getPassword(username).equals(password);
@@ -60,4 +69,43 @@ public class HandleData {
             }
         }
     }
+
+    public static List<String> getApps(String username){
+        Jdbi jdbi = CreateConnectionStoredData();
+        try(Handle handle = jdbi.open()){
+            StoredDataDao dao = handle.attach(StoredDataDao.class);
+            dao.createTable();
+            List<String> apps= dao.getCurrentUserData(username);
+           return apps;
+        }
+    }
+
+    public static void storeProfile(String username, String appId, String appUser, String appPassword){
+        Jdbi jdbi = CreateConnectionStoredData();
+        try(Handle handle = jdbi.open()){
+            StoredDataDao dao = handle.attach(StoredDataDao.class);
+            dao.createTable();
+            StoredData storedData = new StoredData(username, appId, appUser, appPassword);
+            dao.insertUser(storedData);
+        }
+    }
+
+    public static void updateProfile(String username, String appId, String appUser, String appPassword) {
+        Jdbi jdbi = CreateConnectionStoredData();
+        try (Handle handle = jdbi.open()) {
+            StoredDataDao dao = handle.attach(StoredDataDao.class);
+            dao.createTable();
+            StoredData storedData = new StoredData(username, appId, appUser, appPassword);
+            dao.updateUsernameAndPassword(storedData);
+        }
+    }
+
+        public static void returnProfileData(String username, String appId){
+            Jdbi jdbi = CreateConnectionStoredData();
+            try (Handle handle = jdbi.open()) {
+                StoredDataDao dao = handle.attach(StoredDataDao.class);
+                dao.createTable();
+                dao.getChosenRecord(username, appId);
+            }
+        }
 }

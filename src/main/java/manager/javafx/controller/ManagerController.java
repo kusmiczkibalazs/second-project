@@ -18,6 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import manager.database.HandleData;
+import org.jdbi.v3.core.Handle;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -54,25 +56,29 @@ public class ManagerController {
             stage.centerOnScreen();
         });
 
-        List<String> testList = List.of("first", "second", "third");
+        //TODO username
+        List<String> appList = HandleData.getApps("a");
 
-        ObservableList<String> observableList = FXCollections.observableArrayList(testList);
+        ObservableList<String> observableList = FXCollections.observableArrayList(appList);
         dropDownMenu.setItems(observableList);
     }
 
     @FXML
     private void onSaveNewProfileClick() {
+        //HandleData.storeProfile();
         displayInfoMessage("Profil mentve", createUpdateLabel);
     }
 
     @FXML
     private void onUpdateProfileClick() {
+        //HandleData.updateProfile();
         displayInfoMessage("Profil frissítve", createUpdateLabel);
     }
 
     @FXML
     private void onChooseProfileClick() {
         Logger.trace("Chosen profile: " + dropDownMenu.getValue());
+        //HandleData.returnProfileData();
         userNameDisplayLabel.setText("Felhasználónév: " + null);
         displayInfoMessage("Jelszó vágólapra másolva", chooseProfileInfoLabel);
     }

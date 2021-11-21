@@ -20,6 +20,7 @@ public interface UsersDao {
         """
     )
     void createTable();
+
     @SqlUpdate("INSERT INTO USERS (username, password) VALUES (:username, :password)")
     @GetGeneratedKeys
     long insertUser(@BindBean User user);

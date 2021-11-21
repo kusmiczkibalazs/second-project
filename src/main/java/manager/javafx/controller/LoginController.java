@@ -1,5 +1,8 @@
 package manager.javafx.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import manager.model.ManagerModel;
 
 import javafx.application.Platform;
@@ -20,9 +23,7 @@ import java.io.IOException;
 
 public class LoginController {
 
-    private ManagerModel model = new ManagerModel();
-    private String userName;
-    private String userPassword;
+    private final ManagerModel model = new ManagerModel();
 
     @FXML
     private Label infoLabel;
@@ -34,9 +35,6 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private Button registrationButton;
-
-    @FXML
     private Button loginButton;
 
     @FXML
@@ -46,41 +44,40 @@ public class LoginController {
 
     @FXML
     private void onRegistrationClick(){
-        displayInfoMessage("Regisztáció");
+        displayInfoMessage("Sikeres regisztáció");
     }
 
     @FXML
     private void onLoginClick(ActionEvent event) throws IOException {
-        userName = userNameField.getText();
-        userPassword = passwordField.getText();
+        String userName = userNameField.getText();
+        String userPassword = passwordField.getText();
 
         if (model.login(userName, userPassword)) {
-            //Ha a loginfeltétel teljesül:
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("manager.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
             Parent root = fxmlLoader.load();
-            ManagerController managerController = fxmlLoader.<ManagerController>getController();
-            //itt passzolható paraméter a manager egy metódusának, ha kéne
-            managerController.setTempUsernameLabel(userNameField.getText());
+            MenuController menuController = fxmlLoader.<MenuController>getController();
+
+            //menuController.method();
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-        } else{
-            System.out.println("Érvénytelen adatok");
+        } else {
+            displayErrorMessage("Érvénytelen adatok");
         }
     }
 
     private void displayErrorMessage(String message){
         infoLabel.setTextFill(Color.RED);
         infoLabel.setText(message);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> infoLabel.setText("")));
+        timeline.play();
     }
 
     private void displayInfoMessage(String message){
         infoLabel.setTextFill(Color.BLACK);
         infoLabel.setText(message);
-    }
-
-    private void clearLabel(){
-        infoLabel.setText("");
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> infoLabel.setText("")));
+        timeline.play();
     }
 }

@@ -19,13 +19,18 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import manager.database.HandleData;
-import org.jdbi.v3.core.Handle;
 import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.util.List;
 
 public class ManagerController {
+
+    private String currentUser;
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
 
     @FXML
     private TextField profileNameField;
@@ -54,31 +59,33 @@ public class ManagerController {
             dropDownMenu.requestFocus();
             Stage stage = (Stage) dropDownMenu.getScene().getWindow();
             stage.centerOnScreen();
+
+            updateAppList();
         });
-
-        //TODO username
-        List<String> appList = HandleData.getApps("a");
-
-        ObservableList<String> observableList = FXCollections.observableArrayList(appList);
-        dropDownMenu.setItems(observableList);
     }
 
     @FXML
     private void onSaveNewProfileClick() {
-        //HandleData.storeProfile();
+        HandleData.storeProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
+        updateAppList();
         displayInfoMessage("Profil mentve", createUpdateLabel);
+        clearInputs();
     }
 
     @FXML
     private void onUpdateProfileClick() {
-        //HandleData.updateProfile();
+        HandleData.updateProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
+        updateAppList();
         displayInfoMessage("Profil frissítve", createUpdateLabel);
+        clearInputs();
     }
 
     @FXML
     private void onChooseProfileClick() {
         Logger.trace("Chosen profile: " + dropDownMenu.getValue());
-        //HandleData.returnProfileData();
+
+        // TODO RETURN !
+        HandleData.returnProfileData(currentUser, profileNameField.getText());
         userNameDisplayLabel.setText("Felhasználónév: " + null);
         displayInfoMessage("Jelszó vágólapra másolva", chooseProfileInfoLabel);
     }
@@ -90,6 +97,12 @@ public class ManagerController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    private void updateAppList() {
+        List<String> appList = HandleData.getApps(currentUser);
+        ObservableList<String> observableList = FXCollections.observableArrayList(appList);
+        dropDownMenu.setItems(observableList);
     }
 
     private void displayErrorMessage(String message, Label label){
@@ -104,5 +117,11 @@ public class ManagerController {
         label.setText(message);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> label.setText("")));
         timeline.play();
+    }
+
+    private void clearInputs() {
+        profileNameField.clear();
+        userNameField.clear();
+        passwordField.clear();
     }
 }

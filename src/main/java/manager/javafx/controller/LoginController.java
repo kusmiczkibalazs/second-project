@@ -18,6 +18,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import manager.model.exceptions.IncorrectUsernameOrPasswordException;
+import manager.model.exceptions.UserAlreadyExistsException;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 
@@ -44,7 +47,12 @@ public class LoginController {
 
     @FXML
     private void onRegistrationClick(){
-        displayInfoMessage("Sikeres regisztáció");
+        try {
+            model.register(userNameField.getText(), passwordField.getText());
+            displayInfoMessage("Sikeres regisztráció");
+        } catch(UserAlreadyExistsException e){
+            displayErrorMessage(e.getMessage());
+        }
     }
 
     @FXML
@@ -52,7 +60,8 @@ public class LoginController {
         String userName = userNameField.getText();
         String userPassword = passwordField.getText();
 
-        if (model.login(userName, userPassword)) {
+        try {
+            model.login(userName, userPassword);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
             Parent root = fxmlLoader.load();
             MenuController menuController = fxmlLoader.<MenuController>getController();
@@ -62,8 +71,8 @@ public class LoginController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-        } else {
-            displayErrorMessage("Érvénytelen adatok");
+        } catch (IncorrectUsernameOrPasswordException e){
+            displayErrorMessage(e.getMessage());
         }
     }
 

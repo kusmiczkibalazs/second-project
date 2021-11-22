@@ -45,7 +45,6 @@ public class GeneratorController {
     @FXML
     private void onPasswordGeneratorClick() {
         model.copyToClipboard(model.generatePassword((int)lengthSlider.getValue(), capitalLetterCheckbox.isSelected(), numberCheckbox.isSelected(), specialCharacterCheckbox.isSelected()));
-
         Logger.debug("Length:" + (int) lengthSlider.getValue());
         Logger.debug("Capitals:" + capitalLetterCheckbox.isSelected() + " " +
                      "Numbers:" + numberCheckbox.isSelected() + " " +
@@ -60,9 +59,7 @@ public class GeneratorController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
         Parent root = fxmlLoader.load();
         MenuController menuController = fxmlLoader.<MenuController>getController();
-
         menuController.setCurrentUser(currentUser);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

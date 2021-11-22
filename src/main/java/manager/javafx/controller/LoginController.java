@@ -20,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import manager.model.exceptions.IncorrectUsernameOrPasswordException;
 import manager.model.exceptions.UserAlreadyExistsException;
-import org.tinylog.Logger;
 
 import java.io.IOException;
 
@@ -47,11 +46,17 @@ public class LoginController {
 
     @FXML
     private void onRegistrationClick(){
-        try {
-            model.register(userNameField.getText(), passwordField.getText());
-            displayInfoMessage("Sikeres regisztráció");
-        } catch(UserAlreadyExistsException e){
-            displayErrorMessage(e.getMessage());
+        String userName = userNameField.getText();
+        String userPassword = passwordField.getText();
+        if(isEmpty(userName, userPassword)) {
+            displayErrorMessage("Minden mező kitöltése kötelező");
+        } else {
+            try {
+                model.register(userName, userPassword);
+                displayInfoMessage("Sikeres regisztráció");
+            } catch (UserAlreadyExistsException e) {
+                displayErrorMessage(e.getMessage());
+            }
         }
     }
 
@@ -59,21 +64,26 @@ public class LoginController {
     private void onLoginClick(ActionEvent event) throws IOException {
         String userName = userNameField.getText();
         String userPassword = passwordField.getText();
-
-        try {
-            model.login(userName, userPassword);
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
-            Parent root = fxmlLoader.load();
-            MenuController menuController = fxmlLoader.<MenuController>getController();
-
-            menuController.setCurrentUser(userName);
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IncorrectUsernameOrPasswordException e){
-            displayErrorMessage(e.getMessage());
+        if (isEmpty(userName, userPassword)) {
+            displayErrorMessage("Minden mező kitöltése kötelező");
+        } else {
+            try {
+                model.login(userName, userPassword);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
+                Parent root = fxmlLoader.load();
+                MenuController menuController = fxmlLoader.<MenuController>getController();
+                menuController.setCurrentUser(userName);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IncorrectUsernameOrPasswordException e) {
+                displayErrorMessage(e.getMessage());
+            }
         }
+    }
+
+    private boolean isEmpty(String userName, String userPassword) {
+        return userName.equals("") || userPassword.equals("");
     }
 
     private void displayErrorMessage(String message){

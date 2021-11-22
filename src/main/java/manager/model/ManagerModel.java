@@ -4,6 +4,8 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import manager.database.HandleData;
 import manager.database.User;
+import manager.model.exceptions.IncorrectUsernameOrPasswordException;
+import manager.model.exceptions.UserAlreadyExistsException;
 
 public class ManagerModel {
 
@@ -11,15 +13,20 @@ public class ManagerModel {
     HandleData handleData = new HandleData();
 
     public ManagerModel() {
-        //első használat esetén egy admin felhasználó létrehozása. Ha már létezik akkor csupán kijelzi, hogy már létezik
-        boolean adminUserCreated = handleData.saveUser(new User("admin", "admin"));
     }
 
-    public boolean login(String username, String password){
+    public void login(String username, String password) throws IncorrectUsernameOrPasswordException {
         String encodedPassword = encodePassword(password);
-        boolean successfulLogin = handleData.checkUser(username, encodedPassword);
+        if(!handleData.checkUser(username, encodedPassword)){
+            throw new IncorrectUsernameOrPasswordException("Érvénytelen felhasználónév vagy jelszó");
+        }
+    }
 
-       return successfulLogin;
+    public void register(String username, String password) throws UserAlreadyExistsException {
+        String encodedPassword = encodePassword(password);
+        if(!handleData.saveUser(new User(username, encodedPassword))){
+            throw new UserAlreadyExistsException("Már létezik ez a felhasználó");
+        }
     }
 
     private String encodePassword(String original){

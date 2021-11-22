@@ -69,33 +69,39 @@ public class ManagerController {
 
     @FXML
     private void onSaveNewProfileClick() {
-        try{
-            HandleData.storeProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
-            updateAppList();
-            displayInfoMessage("Profil mentve", createUpdateLabel);
-            clearInputs();
-        } catch (IllegalArgumentException e) {
-            displayErrorMessage("Már létezik profil.", createUpdateLabel);
+        if(isEmpty(profileNameField.getText(), userNameField.getText(), passwordField.getText())) {
+            displayErrorMessage("Minden mező kitöltése kötelező", createUpdateLabel);
+        } else {
+             try{
+                HandleData.storeProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
+                updateAppList();
+                displayInfoMessage("Profil mentve", createUpdateLabel);
+                clearInputs();
+            } catch (IllegalArgumentException e) {
+                displayErrorMessage("Már létezik ilyen profil", createUpdateLabel);
+            }
         }
     }
 
     @FXML
     private void onUpdateProfileClick() {
-        try {
-            HandleData.updateProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
-            updateAppList();
-            displayInfoMessage("Profil frissítve", createUpdateLabel);
-            clearInputs();
-        } catch (IllegalArgumentException e) {
-            displayErrorMessage("Nem létezik profil, így nem lehet frissíteni.", createUpdateLabel);
+        if(isEmpty(profileNameField.getText(), userNameField.getText(), passwordField.getText())) {
+            displayErrorMessage("Minden mező kitöltése kötelező", createUpdateLabel);
+        } else {
+            try {
+                HandleData.updateProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
+                updateAppList();
+                displayInfoMessage("Profil frissítve", createUpdateLabel);
+                clearInputs();
+            } catch (IllegalArgumentException e) {
+                displayErrorMessage("Nem létezik ilyen profil", createUpdateLabel);
+            }
         }
     }
 
     @FXML
     private void onChooseProfileClick() {
         Logger.trace("Chosen profile: " + dropDownMenu.getValue());
-
-        // TODO RETURN !
         StoredData storedData = HandleData.returnProfileData(currentUser, dropDownMenu.getValue());
         managerModel.copyToClipboard(storedData.getAppPassword());
         userNameDisplayLabel.setText("Felhasználónév: " + storedData.getAppUser());
@@ -107,9 +113,7 @@ public class ManagerController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
         Parent root = fxmlLoader.load();
         MenuController menuController = fxmlLoader.<MenuController>getController();
-
         menuController.setCurrentUser(currentUser);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -120,6 +124,11 @@ public class ManagerController {
         ObservableList<String> observableList = FXCollections.observableArrayList(appList);
         dropDownMenu.setItems(observableList);
     }
+
+    private boolean isEmpty(String profileNameField, String userNameField, String passwordField) {
+        return profileNameField.equals("") || userNameField.equals("") || passwordField.equals("");
+    }
+
 
     private void displayErrorMessage(String message, Label label){
         label.setTextFill(Color.RED);

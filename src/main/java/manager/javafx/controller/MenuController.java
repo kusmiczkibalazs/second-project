@@ -36,9 +36,7 @@ public class MenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("generator.fxml"));
         Parent root = fxmlLoader.load();
         GeneratorController generatorController = fxmlLoader.<GeneratorController>getController();
-
         generatorController.setCurrentUser(currentUser);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
@@ -49,9 +47,7 @@ public class MenuController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("manager.fxml"));
         Parent root = fxmlLoader.load();
         ManagerController managerController = fxmlLoader.<ManagerController>getController();
-
         managerController.setCurrentUser(currentUser);
-
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

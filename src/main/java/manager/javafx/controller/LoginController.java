@@ -57,7 +57,7 @@ public class LoginController {
             Parent root = fxmlLoader.load();
             MenuController menuController = fxmlLoader.<MenuController>getController();
 
-            //menuController.method();
+            menuController.setCurrentUser(userName);
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));

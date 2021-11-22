@@ -14,6 +14,12 @@ import java.io.IOException;
 
 public class MenuController {
 
+    private String currentUser;
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
+
     @FXML
     private Button logoutButton;
 
@@ -40,7 +46,7 @@ public class MenuController {
         Parent root = fxmlLoader.load();
         ManagerController managerController = fxmlLoader.<ManagerController>getController();
 
-        //managerController.method();
+        managerController.setCurrentUser(currentUser);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

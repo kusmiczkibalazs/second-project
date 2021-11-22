@@ -35,6 +35,10 @@ public class MenuController {
     private void onPasswordGeneratorClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("generator.fxml"));
         Parent root = fxmlLoader.load();
+        GeneratorController generatorController = fxmlLoader.<GeneratorController>getController();
+
+        generatorController.setCurrentUser(currentUser);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

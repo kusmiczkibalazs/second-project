@@ -51,7 +51,7 @@
                         <Insets bottom="40.0" left="40.0" right="40.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Label fx:id="createUpdateLabel" alignment="CENTER" prefWidth="450.0">
+                  <Label fx:id="createUpdateLabel" alignment="CENTER" prefWidth="450.0" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -145,7 +145,7 @@
                         <Font size="20.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="270.0" top="170.0" />
+                        <Insets left="270.0" top="150.0" />
                      </VBox.margin>
                   </Button>
                </children>

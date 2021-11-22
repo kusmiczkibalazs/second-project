@@ -21,6 +21,11 @@ import java.io.IOException;
 public class GeneratorController {
 
     private ManagerModel model = new ManagerModel();
+    private String currentUser;
+
+    public void setCurrentUser(String currentUser) {
+        this.currentUser = currentUser;
+    }
 
     @FXML
     private Slider lengthSlider;
@@ -54,6 +59,10 @@ public class GeneratorController {
     private void onBackClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("menu.fxml"));
         Parent root = fxmlLoader.load();
+        MenuController menuController = fxmlLoader.<MenuController>getController();
+
+        menuController.setCurrentUser(currentUser);
+
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();

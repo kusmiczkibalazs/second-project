@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import manager.database.HandleData;
+import manager.database.StoredData;
+import manager.model.ManagerModel;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ import java.util.List;
 public class ManagerController {
 
     private String currentUser;
+    private ManagerModel managerModel = new ManagerModel();
 
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
@@ -66,18 +69,26 @@ public class ManagerController {
 
     @FXML
     private void onSaveNewProfileClick() {
-        HandleData.storeProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
-        updateAppList();
-        displayInfoMessage("Profil mentve", createUpdateLabel);
-        clearInputs();
+        try{
+            HandleData.storeProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
+            updateAppList();
+            displayInfoMessage("Profil mentve", createUpdateLabel);
+            clearInputs();
+        } catch (IllegalArgumentException e) {
+            displayErrorMessage("Már létezik profil.", createUpdateLabel);
+        }
     }
 
     @FXML
     private void onUpdateProfileClick() {
-        HandleData.updateProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
-        updateAppList();
-        displayInfoMessage("Profil frissítve", createUpdateLabel);
-        clearInputs();
+        try {
+            HandleData.updateProfile(currentUser, profileNameField.getText(), userNameField.getText(), passwordField.getText());
+            updateAppList();
+            displayInfoMessage("Profil frissítve", createUpdateLabel);
+            clearInputs();
+        } catch (IllegalArgumentException e) {
+            displayErrorMessage("Nem létezik profil, így nem lehet frissíteni.", createUpdateLabel);
+        }
     }
 
     @FXML
@@ -85,8 +96,9 @@ public class ManagerController {
         Logger.trace("Chosen profile: " + dropDownMenu.getValue());
 
         // TODO RETURN !
-        HandleData.returnProfileData(currentUser, profileNameField.getText());
-        userNameDisplayLabel.setText("Felhasználónév: " + null);
+        StoredData storedData = HandleData.returnProfileData(currentUser, dropDownMenu.getValue());
+        managerModel.copyToClipboard(storedData.getAppPassword());
+        userNameDisplayLabel.setText("Felhasználónév: " + storedData.getAppUser());
         displayInfoMessage("Jelszó vágólapra másolva", chooseProfileInfoLabel);
     }
 

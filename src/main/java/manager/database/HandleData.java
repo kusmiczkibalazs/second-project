@@ -85,8 +85,13 @@ public class HandleData {
         try(Handle handle = jdbi.open()){
             StoredDataDao dao = handle.attach(StoredDataDao.class);
             dao.createTable();
-            StoredData storedData = new StoredData(username, appId, appUser, appPassword);
-            dao.insertUser(storedData);
+            Integer isExist = dao.getChosenRecord(username, appId).size();
+            if(isExist == 0) {
+                StoredData storedData = new StoredData(username, appId, appUser, appPassword);
+                dao.insertUser(storedData);
+            }else{
+                throw new IllegalArgumentException();
+            }
         }
     }
 
@@ -95,17 +100,23 @@ public class HandleData {
         try (Handle handle = jdbi.open()) {
             StoredDataDao dao = handle.attach(StoredDataDao.class);
             dao.createTable();
-            StoredData storedData = new StoredData(username, appId, appUser, appPassword);
-            dao.updateUsernameAndPassword(storedData);
+            Integer isExist = dao.getChosenRecord(username, appId).size();
+            if(isExist == 0){
+                throw new IllegalArgumentException();
+            }else{
+                StoredData storedData = new StoredData(username, appId, appUser, appPassword);
+                dao.updateUsernameAndPassword(storedData);
+            }
         }
     }
 
-        public static void returnProfileData(String username, String appId){
+        public static StoredData returnProfileData(String username, String appId){
             Jdbi jdbi = CreateConnectionStoredData();
             try (Handle handle = jdbi.open()) {
                 StoredDataDao dao = handle.attach(StoredDataDao.class);
                 dao.createTable();
-                dao.getChosenRecord(username, appId);
+                List<StoredData> chosenRecord = dao.getChosenRecord(username, appId);
+                return chosenRecord.get(0);
             }
         }
 }

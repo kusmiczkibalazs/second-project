@@ -33,9 +33,9 @@ public interface StoredDataDao {
     @SqlQuery("SELECT * FROM STORED_DATA WHERE username = :username AND appId = :appId")
     List<StoredData> getChosenRecord(@Bind("username") String username, @Bind("appId") String appId);
 
-    @SqlUpdate("UPDATE STORED DATA" +
+    @SqlUpdate("UPDATE STORED_DATA " +
             "SET appUser = :appUser," +
-            "appPassword = :appPassword" +
+            "appPassword = :appPassword " +
             "where username = :username AND appId = :appId")
     void updateUsernameAndPassword(@BindBean StoredData storedData);
 }

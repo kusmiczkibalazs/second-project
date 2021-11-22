@@ -50,7 +50,8 @@ Szeretnénk olyan szoftveres megoldást, mellyel alkalmazottaink biztonságosan 
 ![](https://raw.githubusercontent.com/nehai-kettes-tankor/second-project/master/Documents/menu-design.png)
 ---
 ![](https://raw.githubusercontent.com/nehai-kettes-tankor/second-project/master/Documents/generator-design.png)
-
+---
+![](https://raw.githubusercontent.com/nehai-kettes-tankor/second-project/master/Documents/manager-design.png)
 
 ## 8. Fogalomszótár
 Platformfüggetlenség:

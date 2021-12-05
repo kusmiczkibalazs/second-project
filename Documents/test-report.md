@@ -3,6 +3,8 @@
 |Funkció leírása|Vizsgálat módja|Elvárt eredmény|Megfelelőség|
 |---------------|---------------|---------------|------------|
 |Megfelelő jelszó generálása             |Automatikus tesztelés   |A paramétereknek megfelelő jelszó generálása                      | :heavy_check_mark:
+|Regisztráció túl hosszú felhasználónévvel             |Automatikus tesztelés   |Túl hosszú felhasználónév esetén sikertelen regisztráció, hibaüzenet után a program fut tovább                      | :heavy_check_mark:
+|Regisztráció túl hosszú jelszóval             |Automatikus tesztelés   |Túl hosszú jelszó esetén sikertelen regisztráció, hibaüzenet után a program fut tovább                      | :heavy_check_mark:
 |Regisztráció érvényes adatokkal             |Manuális tesztelés, új fiók regisztrálása   |Sikeres regisztráció                         | :heavy_check_mark:
 |Regisztráció hiányos adatokkal             |Manuális tesztelés, új fiók regisztrálása   |Hiányos adatok esetén nem történik regisztráció, hibaüzenet után a program fut tovább                         | :heavy_check_mark:
 |Regisztráció foglalt névvel             |Manuális tesztelés, új fiók regisztrálása   |Nem történik regisztráció foglalt felhasználónév esetén, hibaüzenet után a program fut tovább                         | :heavy_check_mark:

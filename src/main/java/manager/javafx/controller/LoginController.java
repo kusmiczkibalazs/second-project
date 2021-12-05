@@ -19,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import manager.model.exceptions.IncorrectUsernameOrPasswordException;
+import manager.model.exceptions.PasswordTooLongException;
 import manager.model.exceptions.UserAlreadyExistsException;
 
 import java.io.IOException;
@@ -55,6 +56,8 @@ public class LoginController {
                 model.register(userName, userPassword);
                 displayInfoMessage("Sikeres regisztráció");
             } catch (UserAlreadyExistsException e) {
+                displayErrorMessage(e.getMessage());
+            } catch (PasswordTooLongException e){
                 displayErrorMessage(e.getMessage());
             }
         }

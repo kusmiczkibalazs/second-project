@@ -9,17 +9,6 @@ import manager.model.exceptions.PasswordTooLongException;
 import manager.model.exceptions.UserAlreadyExistsException;
 import manager.model.exceptions.UsernameTooLongexception;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
-
 public class ManagerModel {
 
     HandleData handleData = new HandleData();

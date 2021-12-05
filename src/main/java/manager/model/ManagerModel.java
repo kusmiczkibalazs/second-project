@@ -5,41 +5,35 @@ import javafx.scene.input.ClipboardContent;
 import manager.database.HandleData;
 import manager.database.User;
 import manager.model.exceptions.IncorrectUsernameOrPasswordException;
-import manager.model.exceptions.PasswordTooLongException;
 import manager.model.exceptions.UserAlreadyExistsException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Base64;
 
 public class ManagerModel {
 
+    private String currentUsersName = "";
     HandleData handleData = new HandleData();
 
+
     public void login(String username, String password) throws IncorrectUsernameOrPasswordException {
-        String encodedPassword = encodePassword(password);
-        if(!handleData.checkUser(username, encodedPassword)){
+        if(!handleData.checkUser(username, password)){
             throw new IncorrectUsernameOrPasswordException("Érvénytelen felhasználónév vagy jelszó");
         }
     }
 
-    public void register(String username, String password) throws UserAlreadyExistsException, PasswordTooLongException {
-        final int maxLength = 20;
-        if(password.length() > maxLength){
-            throw new PasswordTooLongException("A jelszó maximum " + maxLength + " karakter hosszú lehet.");
-        }
-        String encodedPassword = encodePassword(password);
-        if(!handleData.saveUser(new User(username, encodedPassword))){
+    public void register(String username, String password) throws UserAlreadyExistsException {
+        if(!handleData.saveUser(new User(username, password))){
             throw new UserAlreadyExistsException("Már létezik ez a felhasználó");
         }
-    }
-
-    private String encodePassword(String original){
-        String encoded = original;
-
-        return encoded;
-    }
-
-    private String decodePassword(String original){
-        String decoded = original;
-
-        return decoded;
     }
 
     public String generatePassword(int length, boolean capitals, boolean numbers, boolean special){

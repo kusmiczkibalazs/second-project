@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import manager.model.exceptions.IncorrectUsernameOrPasswordException;
 import manager.model.exceptions.PasswordTooLongException;
 import manager.model.exceptions.UserAlreadyExistsException;
+import manager.model.exceptions.UsernameTooLongexception;
 
 import java.io.IOException;
 
@@ -56,6 +57,8 @@ public class LoginController {
                 model.register(userName, userPassword);
                 displayInfoMessage("Sikeres regisztráció");
             } catch (UserAlreadyExistsException e) {
+                displayErrorMessage(e.getMessage());
+            } catch (UsernameTooLongexception e){
                 displayErrorMessage(e.getMessage());
             } catch (PasswordTooLongException e){
                 displayErrorMessage(e.getMessage());

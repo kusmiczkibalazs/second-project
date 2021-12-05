@@ -5,15 +5,12 @@ import javafx.scene.input.ClipboardContent;
 import manager.database.HandleData;
 import manager.database.User;
 import manager.model.exceptions.IncorrectUsernameOrPasswordException;
+import manager.model.exceptions.PasswordTooLongException;
 import manager.model.exceptions.UserAlreadyExistsException;
 
 public class ManagerModel {
 
-    private String currentUsersName = "";
     HandleData handleData = new HandleData();
-
-    public ManagerModel() {
-    }
 
     public void login(String username, String password) throws IncorrectUsernameOrPasswordException {
         String encodedPassword = encodePassword(password);
@@ -22,7 +19,11 @@ public class ManagerModel {
         }
     }
 
-    public void register(String username, String password) throws UserAlreadyExistsException {
+    public void register(String username, String password) throws UserAlreadyExistsException, PasswordTooLongException {
+        final int maxLength = 20;
+        if(password.length() > maxLength){
+            throw new PasswordTooLongException("A jelszó maximum " + maxLength + " karakter hosszú lehet.");
+        }
         String encodedPassword = encodePassword(password);
         if(!handleData.saveUser(new User(username, encodedPassword))){
             throw new UserAlreadyExistsException("Már létezik ez a felhasználó");

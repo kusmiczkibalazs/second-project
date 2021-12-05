@@ -83,6 +83,7 @@ public class HandleData {
             List<String> usernames= dao.getUsernames();
             if(usernames.contains(username)){
                 return decodePassword(dao.getPassword(username)).equals(password);
+                //return password.equals(decodePassword(dao.getPassword(username)));
             }else{
                 return false;
             }
